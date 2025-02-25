@@ -1,0 +1,28 @@
+1.マッピング解決
+	問題定義）myBatis 의존성을 주입하였다. 
+			그 후, mapper.xml파일에 namespace를 통해 mapper.java 클래스의 위치를 선언해야하는데 오류가 발생했다
+	문제원인) namespace오타
+	문제해결) nameplace를 namespace로 수정
+	
+2.롬복 의존성 주입 
+	문제정의) 
+	Unable to collect dependencies for plugin
+	The following artifacts could not be resolved: org.projectlombok:lombok:jar: (absent): org.projectlombok:lombok:jar: 
+	was not found in https://repo.maven.apache.org/maven2 during a previous attempt. This failure was cached
+ 	in the local repository and resolution is not reattempted
+ 	until the update interval of central has elapsed or updates are forced
+	문제원인) 플러그인에 버전이 없어서 그랬다.
+	문제해결) 플러그인에 최신 버전을 입력하여 해결
+	
+3. 스프링 부트 실패
+	문제정의) 스프링 부트 실행 중 실패
+	문제원인) 로컬의 데이터베이스가 연결되지 않았음
+	문제해결) application.properties에 로컬호스트를 제대로 연결하여 해결 
+	
+4. BoardApplicationTests 빌드실패
+	문제정의) maven install 중, BoardApplicationTests가 필드 되지 않는 오류 발생
+	문제원인) BoardApplicationTests » IllegalState Unable to find a @SpringBootConfiguration by searching packages upwards from the test.
+	 You can use @ContextConfiguration, @SpringBootTest(classes=...) or other Spring Test supported mechanisms to explicitly declare 
+	 the configuration classes to load. Classes annotated with @TestConfiguration are not considered
+	@SpringBootApplication의 하위에 테스트가 존재해야 하는데 그러지 않아서 생긴 오류
+	문제해결) @SpringBootTest(classes = BoardApplication.class)를 추가하여 test클래스를 하위로 설정하였다.

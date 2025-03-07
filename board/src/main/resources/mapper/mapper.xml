@@ -2,8 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.restful.app.mapper.boardMapper.java">
 
+	<!-- 会員登録 -->
+	<insert id="createUser" parameterType="String">
+	INSERT INTO users(
+		 id
+    	,password
+    	,nickname
+    	<if test="roll isNotNull">
+    	,roll
+    	</if>
+		)
+	VALUES(
+		 #{id}
+		,#{password}
+		<if test="roll isNotNull">
+    	,#{roll}
+    	</if>
+		,#{nickname}
+		)
+	</insert>
+	
+	<!-- 会員閲覧 -->
+	<select id="readAllUsers" resultType="UsersVO">
+		SELECT  id
+		       ,password
+		       ,nickname
+		       ,create_date
+		       ,roll
+		FROM users
+	</select>
 
-
-
-
+	<!-- 会員照会 -->
+	<select id="readUser">
+		SELECT  id
+		       ,password
+		       ,nickname
+		       ,create_date
+		       ,roll
+		FROM users
+		WHERE id = #{id}
+	</select>
+	
+	<!-- 会員修正 -->
+	<update id="updateUser" parameterType="UsersVO">
+		UPDATE users 
+		SET  password = #{password}
+   			,nickname = #{nickname}
+  			,roll = #{roll}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 会員削除 -->
+	<delete id="deleteUser" parameterType="String">
+		DELETE users
+		WHERE id = #{id}
+	</delete>
+	
+	<!-- 掲示物登録 -->
+	<insert id="createPost">
+		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
+			SELECT COALESCE(MAX(post_no),0) + 1 as post_no_nextval
+			FROM post
+		</selectKey>
+		INSERT INTO post(
+			,title
+			,content
+			,writer
+		)
+		VALUES(
+		)
+	</insert>
 </mapper>

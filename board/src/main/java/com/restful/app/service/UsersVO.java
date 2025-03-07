@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UsersVO {
 	private String id;
+	private String roll;
 	private Integer password;
 	private String nickname;
 	@DateTimeFormat(pattern = "yyy-mm-dd")

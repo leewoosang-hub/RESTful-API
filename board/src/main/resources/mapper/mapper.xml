@@ -48,7 +48,6 @@
 		UPDATE users 
 		SET  password = #{password}
    			,nickname = #{nickname}
-  			,roll = #{roll}
 		WHERE id = #{id}
 	</update>
 	
@@ -61,15 +60,55 @@
 	<!-- 掲示物登録 -->
 	<insert id="createPost">
 		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
-			SELECT COALESCE(MAX(post_no),0) + 1 as post_no_nextval
+			SELECT NVL(MAX(post_no), 0) + 1 as post_no_nextval
 			FROM post
 		</selectKey>
 		INSERT INTO post(
+			 post_no
 			,title
 			,content
 			,writer
 		)
 		VALUES(
+			 #{postNo}		
+			,#{title}
+			,#{content}
+			,#{writer}
 		)
 	</insert>
+	
+	<!-- 掲示物項目 -->
+	<select id="readAllposts" resultType="PostVO">
+		SELECT post_no
+			   ,title
+			   ,content
+			   ,regDate
+			   ,writer
+		FROM post
+	</select>
+	
+	<!-- 掲示物照会 -->
+	<select id="readPost" resultType="PostVO" parameterType="int">
+		SELECT post_no
+			   ,title
+			   ,content
+			   ,regDate
+			   ,writer
+		FROM post
+		WHERE #{post_no}
+	</select>
+	
+	<!-- 掲示物修正 -->
+	<update id="updatePost" parameterType="int">
+		UPDATE post
+		SET title = #{title}
+			,content = #{content}
+		WHERE post_no = #{postNo}
+	</update>
+	
+	<!-- 掲示物削除 -->
+	<delete id="deletePost" parameterType="int">
+		DELETE post
+		WHERE post_no = #{postNo}
+	</delete>
 </mapper>

@@ -8,14 +8,17 @@ import com.restful.app.mapper.BoardMapper;
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	@Autowired
 	private BoardMapper boardMapper;
+	
+	@Autowired
+	public BoardServiceImpl(BoardMapper boardMapper) {
+		this.boardMapper = boardMapper;
+	}
 	
 	@Override
 	public int createUser(UsersVO userVO) {
-		int result;
 		try {
-			return result = boardMapper.createUser(userVO);
+			return boardMapper.createUser(userVO);
 		} catch (Exception e) {
 			throw new RuntimeException("エラーが発生しました。" + e.getMessage());
 		}

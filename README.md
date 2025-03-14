@@ -1,3 +1,3 @@
 ## RESTful API 設計の練習
 
-Java 21
+Java 17
